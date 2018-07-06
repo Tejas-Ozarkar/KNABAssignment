@@ -1,0 +1,66 @@
+<div class="header">
+    <div class="user-info">
+        <div class="profile-wrap">
+            <img [src]="user.imageUrl" height="100px" width="100px">
+        </div>
+        <div class="name">
+            <h4>{{user.name}}</h4>
+            <h5>{{user.email}}</h5>
+        </div>
+    </div>
+    <button class="option-button"></button>
+
+    <div class="dropdown">
+        <button class=" option-button" type="button" data-toggle="dropdown"><i class="fas fa-ellipsis-v"></i></button>
+        <ul class="dropdown-menu">
+            <li><a href="#">Edit Profile</a></li>
+            <li><a href="#">Sign Out</a></li>
+        </ul>
+    </div>
+</div>
+
+
+
+<div class="addSubjectModal" *ngIf="showAddSubjectModal">
+    <div class="subject-dialog">
+        <h3>Add New Subject</h3>
+        <input type="text" placeholder="Subject Name" [(ngModel)]="newSubject.name">
+        <input type="text" placeholder="Subject teacher name" [(ngModel)]="newSubject.teacher">
+        <input type="text" placeholder="duration" [(ngModel)]="newSubject.duration">
+        <input type="text" placeholder="semester" [(ngModel)]="newSubject.semester">
+        <button (click)="addSubject()" class="add-subject">Add new subject</button>
+        <button (click)="showAddSubject()" class="close-button"><i class="fas fa-times"></i></button>
+    </div>
+</div>
+
+<div class="subject-card-wrap row">
+    <div class="col-md-4" *ngFor="let subject of subjects | paginate: { itemsPerPage: 6, currentPage: p }; let i = index">
+        <div class="subject-card" (click)="editModal(subject)">
+            <p>Subject Name: <span>{{subject.name}}</span> </p>
+            <p> Teacher: <span>{{subject.teacher}} </span></p>
+            <p> Duration: <span>{{subject.duration}}</span> </p>
+            <p>Semester: <span>{{subject.semester}} </span></p>
+        </div>
+    </div>
+</div>
+
+<div class="editSubjectModal" *ngIf="showEditSubjectModal">
+    <div class="subject-dialog">
+        <h3>Edit Subject</h3>
+        <input type="text" placeholder="Subject Name" [(ngModel)]="selectedSubject.name">
+        <input type="text" placeholder="Subject teacher name" [(ngModel)]="selectedSubject.teacher">
+        <input type="text" placeholder="duration" [(ngModel)]="selectedSubject.duration">
+        <input type="text" placeholder="semester" [(ngModel)]="selectedSubject.semester">
+        <div class="edit-buttons">
+            <button (click)="editSubject()" class="add-subject">Edit subject</button>
+            <button (click)="deleteSubject()" class="add-subject delete">Delete subject</button></div>
+        <button (click)="editModal(null)" class="close-button"><i class="fas fa-times"></i></button>
+    </div>
+</div>
+<div class="pagination">
+    <pagination-controls (pageChange)=" p=$event "></pagination-controls>
+</div>
+
+
+
+<button (click)="showAddSubject()" class="add-subject-btn"><i class="fas fa-plus"></i></button>
